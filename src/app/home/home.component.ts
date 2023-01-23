@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { HomeStore } from './data-access/home.store';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ import { IonicModule } from '@ionic/angular';
     <ion-content> </ion-content>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [HomeStore],
 })
 export class HomeComponent {}
 @NgModule({
