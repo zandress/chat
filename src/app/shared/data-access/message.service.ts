@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  addDoc,
   collection,
   collectionData,
   Firestore,
@@ -30,5 +31,18 @@ export class MessageService {
     return collectionData(messagesCollection, { idField: 'id' }).pipe(
       map((messages) => [...messages].reverse())
     ) as Observable<Message[]>;
+  }
+
+  addMessage(message: string) {
+    const newMessage: Message = {
+      author: 'me@test.com',
+      content: message,
+      created: Date.now().toString(),
+    };
+
+    // Create a reference to the collection
+    const messagesCollection = collection(this.firestore, 'messages');
+    // Add the new document to the messages collection
+    addDoc(messagesCollection, newMessage);
   }
 }
