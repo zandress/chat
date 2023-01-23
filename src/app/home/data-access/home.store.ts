@@ -10,7 +10,7 @@ export interface HomeState {
 
 @Injectable()
 export class HomeStore extends ComponentStore<HomeState> {
-  message$ = this.select((state) => state.messages);
+  messages$ = this.select((state) => state.messages);
 
   loadMessages = this.effect(($) =>
     $.pipe(
