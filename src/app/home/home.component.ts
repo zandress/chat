@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, NgModule } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgModule, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { combineLatest, map } from 'rxjs';
 import { HomeStore } from './data-access/home.store';
 
 @Component({
@@ -17,7 +18,17 @@ import { HomeStore } from './data-access/home.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [HomeStore],
 })
-export class HomeComponent {}
+export class HomeComponent implements OnInit {
+  vm$ = combineLatest([this.store.messages$]).pipe(
+    map(([messages]) => ({ messages }))
+  );
+
+  constructor(public store: HomeStore) {}
+
+  ngOnInit() {
+      this.store.loadMessages();
+  }
+}
 @NgModule({
   imports: [
     CommonModule,
