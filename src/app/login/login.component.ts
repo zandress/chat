@@ -35,7 +35,7 @@ import { LoginFormComponentModule } from './ui/login-form.component';
         <ion-button
           expand="full"
           data-test="open-create-button"
-          (click)="store.setCreateModalOpen(true)"
+          (click)="store.setCreateModalIsOpen(true)"
         >
           Create Account
         </ion-button>
