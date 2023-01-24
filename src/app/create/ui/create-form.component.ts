@@ -11,6 +11,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Credentials } from 'src/app/shared/interfaces/credentials';
 import { CreateStatus } from '../create-modal.component';
+import { passwordMatchesValidator } from '../utils/password-matches';
 
 @Component({
   selector: 'app-create-form',
@@ -73,11 +74,17 @@ export class CreateFormComponent {
   @Input() createStatus!: CreateStatus;
   @Output() create = new EventEmitter<Credentials>();
 
-  createForm = this.fb.nonNullable.group({
-    email: ['', [Validators.email, Validators.required]],
-    password: ['', [Validators.minLength(8), Validators.required]],
-    confirmPassword: ['', [Validators.required]],
-  });
+  createForm = this.fb.nonNullable.group(
+    {
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', [Validators.minLength(8), Validators.required]],
+      confirmPassword: ['', [Validators.required]],
+    },
+    {
+      updateOn: 'blur',
+      validators: [passwordMatchesValidator],
+    }
+  );
 
   constructor(private fb: FormBuilder) {}
 
