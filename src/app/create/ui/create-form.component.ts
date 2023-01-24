@@ -3,12 +3,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   NgModule,
   Output,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Credentials } from 'src/app/shared/interfaces/credentials';
+import { CreateStatus } from '../create-modal.component';
 
 @Component({
   selector: 'app-create-form',
@@ -68,6 +70,7 @@ import { Credentials } from 'src/app/shared/interfaces/credentials';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateFormComponent {
+  @Input() createStatus!: CreateStatus;
   @Output() create = new EventEmitter<Credentials>();
 
   createForm = this.fb.nonNullable.group({
