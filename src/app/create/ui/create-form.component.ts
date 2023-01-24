@@ -25,6 +25,15 @@ import { passwordMatchesValidator } from '../utils/password-matches';
           placeholder="email"
         ></ion-input>
       </ion-item>
+      <ion-note
+        color="danger"
+        *ngIf="
+          (createForm.controls.email.dirty || form.submitted) &&
+          !createForm.controls.email.valid
+        "
+      >
+        Please provide a valid email
+      </ion-note>
       <ion-item lines="none">
         <ion-icon
           color="light"
@@ -37,6 +46,15 @@ import { passwordMatchesValidator } from '../utils/password-matches';
           placeholder="password"
         ></ion-input>
       </ion-item>
+      <ion-note
+        color="danger"
+        *ngIf="
+          (createForm.controls.password.dirty || form.submitted) &&
+          !createForm.controls.password.valid
+        "
+      >
+        Password must be at least 8 characters long
+      </ion-note>
       <ion-item lines="none">
         <ion-icon
           color="light"
@@ -49,7 +67,26 @@ import { passwordMatchesValidator } from '../utils/password-matches';
           placeholder="confirm password"
         ></ion-input>
       </ion-item>
-      <ion-button type="submit" expand="full"> Submit </ion-button>
+      <ion-note
+        color="danger"
+        *ngIf="
+          (createForm.controls.confirmPassword.dirty || form.submitted) &&
+          createForm.hasError('passwordMatch')
+        "
+      >
+        Must match password field
+      </ion-note>
+      <ion-note color="danger" *ngIf="createStatus === 'error'">
+        Could not create account with those details.
+      </ion-note>
+      <ion-button
+        type="submit"
+        expand="full"
+        [disabled]="createStatus === 'creating'"
+      >
+        <ion-spinner *ngIf="createStatus === 'creating'"></ion-spinner>
+        Submit
+      </ion-button>
     </form>
   `,
   styles: [
