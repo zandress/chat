@@ -5,6 +5,7 @@ import {
   Input,
   NgModule,
 } from '@angular/core';
+import { User } from '@angular/fire/auth';
 import { IonicModule } from '@ionic/angular';
 import { Message } from '../../shared/interfaces/message';
 
@@ -13,7 +14,11 @@ import { Message } from '../../shared/interfaces/message';
   template: `
     <ion-list lines="none">
       <ion-item *ngFor="let message of messages; trackBy: trackByFn">
-        <ion-avatar class="animate-in-primary">
+        <ion-avatar
+          *ngIf="activeUser"
+          [slot]="message.author === activeUser.email ? 'start' : 'end'"
+          class="animate-in-primary"
+        >
           <img
             *ngIf="message.author"
             src="https://avatars.dicebear.com/api/bottts/{{
@@ -52,6 +57,7 @@ import { Message } from '../../shared/interfaces/message';
 })
 export class MessageListComponent {
   @Input() messages!: Message[];
+  @Input() activeUser!: User;
 
   trackByFn(index: number, message: Message) {
     return message.created;
